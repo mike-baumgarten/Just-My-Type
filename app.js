@@ -31,6 +31,36 @@ function resetYellowBlock() {
 function targetLetter() {
     $('#target-letter').text(currentSentence[letterIndex])
 }
+
+// next sentence
+function nextSentence() {
+    // empties div with id feedback
+    $('#feedback').empty()
+
+    // reset letterIndex
+    letterIndex = 0
+
+    // increases totalSentence by 1
+    totalSentences++
+
+    // resets div with ID yellow-block
+    resetYellowBlock();
+
+    // sets currentSentence
+    currentSentence = sentences[totalSentences]
+    $('#sentence').text(currentSentence)
+}
+
+// game end
+function lastSentence() {
+    // empties divs with id feedback and target-letter
+    $('#feedback, #target-letter').empty()
+
+    // resets div with ID yellow-block
+    resetYellowBlock();
+
+    $('#feedback').text(mistakeCount)
+}
 // sets div with id sentence text to current sentence
 $('#sentence').text(currentSentence)
 
@@ -92,24 +122,8 @@ $(document).keypress(function (e) {
                 inCorrectLetter()
             }
 
-            // removes items with class glyphicon
-            $('.glyphicon').remove()
-
-            // reset letterIndex
-            letterIndex = 0
-
-            // increases totalSentence by 1
-            totalSentences++
-
-            // resets div with ID yellow-block
-            resetYellowBlock();
-            
-            // sets currentSentence
-            currentSentence = sentences[totalSentences]
-            $('#sentence').text(currentSentence)
-
-
-
+            // next sentence
+            nextSentence()
         }
     } else {
         // if statement comparing letterIndex to current sentence length.  This allows us to control what happens when we hit the last letter of a sentence
@@ -131,17 +145,7 @@ $(document).keypress(function (e) {
             } else {
                 inCorrectLetter();
             };
-
-            // removes items with class glyphicon
-            $('.glyphicon').remove();
-
-            // reset letterIndex
-            letterIndex = 0
-            // increases totalSentence by 1
-            totalSentences++
-
-            // resets div with ID yellow-block
-            resetYellowBlock();
+            lastSentence()
 
         }
     }

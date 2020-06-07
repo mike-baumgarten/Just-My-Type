@@ -1,46 +1,47 @@
 * {
-  margin: 0;
-  padding: 0;	
+    margin: 0;
+    padding: 0;
 }
 
 #prompt-container {
-  font-family: Courier New, Courier, monospace;
-  font-size: 24px;
-  letter-spacing: 3px;
+    font-family: Courier New, Courier, monospace;
+    font-size: 24px;
+    letter-spacing: 3px;
 }
 
 #yellow-block {
-  position: absolute;
-  margin-top: 10px;
-  width: 13px;
-  height: 15px;
-  background-color: yellow;
+    position: absolute;
+    margin-top: 10px;
+    width: 13px;
+    height: 15px;
+    background-color: yellow;
 }
 
 .keyboard-container {
-  margin-top: 200px;
+    margin-top: 200px;
 }
 
 #target-letter {
-  font-size: 38px;  
+    font-size: 38px;
 }
 
 .keys-row {
-  margin-top: 40px;
-  padding: 10px 0;
+    margin-top: 40px;
+    padding: 10px 0;
 }
 
 #feedback {
-  font-size: 20px;
+    font-size: 20px;
 }
 .glyphicon-ok {
-  color: #1DA237
+    color: #1da237;
 }
 
 .glyphicon-remove {
-  color : #CD2626
+    color: #cd2626;
 }
 
-.highlight {
-  background-color: yellow;
+.highlight,
+.letterHighlight {
+    background-color: yellow;
 }

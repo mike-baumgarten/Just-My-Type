@@ -14,6 +14,7 @@ let mistakeCount = 0;
 let timerStarted = null;
 let totalWords = 54;
 let startTime, endTime, totalTime;
+
 // Functions
 
 // adds span with green checkmark to #feedback
@@ -29,36 +30,43 @@ function inCorrectLetter() {
     $('#feedback').append($addSpan);
 }
 
-// set yellow block back to initial state
-function resetYellowBlock() {
-    $('#yellow-block').animate(
-        { left: `15px` },
-        { duration: 75, easing: `linear` }
-    );
-}
-
 // set target letter
 function targetLetter() {
-    $('#target-letter').text(currentSentence[letterIndex]);
+    if (currentSentence[letterIndex] === ' ') {
+        $('#target-letter').text('<space>');
+    } else {
+        $('#target-letter').text(currentSentence[letterIndex]);
+    }
 }
-
+/*
+loops through current sentence and adds each letter as a span to #sentences. this allows me to highlight each letter 
+directly instead of having to move the yellow block across the screen
+*/
+function addSentence() {
+    for (let i = 0; i < currentSentence.length; i++) {
+        let $addSpan = $('<span>')
+            .attr('id', 'letter' + i)
+            .text(currentSentence[i]);
+        $('#sentence').append($addSpan);
+    }
+}
 // next sentence
 function nextSentence() {
     // empties div with id feedback
     $('#feedback').empty();
-
+    $('#sentence').empty();
     // reset letterIndex
     letterIndex = 0;
 
     // increases totalSentence by 1
     totalSentences++;
 
-    // resets div with ID yellow-block
-    resetYellowBlock();
+    //sets current sentence
+    currentSentence = sentences[totalSentences];
 
     // sets currentSentence
-    currentSentence = sentences[totalSentences];
-    $('#sentence').text(currentSentence);
+    addSentence();
+    $('#letter0').attr('class', 'letterHighlight');
 }
 
 // game completed
@@ -68,9 +76,7 @@ function gameCompleted() {
     // empties divs with id feedback, target-letter, sentence
     $('#feedback, #target-letter, #sentence').empty();
     $('.highlight').removeClass('highlight');
-    // resets div with ID yellow-block
-    resetYellowBlock();
-    $('#yellow-block').hide();
+
     let wpm = totalWords / totalTime - 2 * mistakeCount;
     $('#sentence').text(
         'Congratulations, you typed ' + Math.round(wpm) + ' words per minute'
@@ -107,7 +113,10 @@ function resetGame() {
     location.reload(true);
 }
 // sets div with id sentence text to current sentence
-$('#sentence').text(currentSentence);
+addSentence();
+
+// Starting highlight
+$('#letter0').attr('class', 'letterHighlight');
 
 //Sets starting target letter
 targetLetter();
@@ -148,11 +157,6 @@ $(document).keypress(function (e) {
     let asciiCurrentLetter = currentSentence.charCodeAt(letterIndex);
 
     // moves yellow block right on keypress
-    $('#yellow-block').animate(
-        { left: '+=17.5px' },
-        { duration: 50, easing: 'linear' }
-    );
-
     // if statement comparing totalSentences to sentence length.  This allows us to control what happens when we hit the last sentence
     if (totalSentences < sentences.length - 1) {
         // if statement comparing letterIndex to current sentence length.  This allows us to control what happens when we hit the last letter of a sentence
@@ -205,4 +209,6 @@ $(document).keypress(function (e) {
     } else {
         $('.highlight').toggleClass('highlight');
     }
+    $('.letterHighlight').toggleClass('letterHighlight');
+    $('#letter' + letterIndex).attr('class', 'letterHighlight');
 });

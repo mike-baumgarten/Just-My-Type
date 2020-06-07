@@ -112,6 +112,9 @@ function stop() {
 function resetGame() {
     location.reload(true);
 }
+
+// Start Game
+
 // sets div with id sentence text to current sentence
 addSentence();
 
@@ -209,6 +212,7 @@ $(document).keypress(function (e) {
     } else {
         $('.highlight').toggleClass('highlight');
     }
+    // Removes highlighting and moves to next letter on keypress
     $('.letterHighlight').toggleClass('letterHighlight');
     $('#letter' + letterIndex).attr('class', 'letterHighlight');
 });
